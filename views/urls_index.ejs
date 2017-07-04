@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <% include ./partials/_header %>
+  <title>TinyApp</title>
+</head>
+<body>
+  <ul>
+    <% for (let url in urls) { %>
+    <li><%= urls[url] %> - <%= [url] %></li>
+    <% }; %>
+    <a href="url">Link</a>
+  </ul>
+    <!-- Add your EJS code here -->
+</body>
+</html>
