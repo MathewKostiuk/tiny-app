@@ -10,6 +10,7 @@
     <li><%= urls[url] %> - <%= [url] %></li>
     <form method="POST" action="/urls/<%= [url] %>/delete">
     <button type="submit">Delete URL</button>
+    <a href="/urls/<%= url %>">Edit</a>
     </form>
     <% }; %>
     <a href="url">Link</a>
