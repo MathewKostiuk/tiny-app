@@ -44,9 +44,9 @@ app.get("/urls/:id", (req, res) => {
 app.post("/urls", (req, res) => {
   const shorty = generateRandomString();
   //console.log(req.path);
-  const testy = /\bhttp:\/\//;
+  const re = /\bhttps?:\/\//;
   const longy = req.body.longURL;
-  if (testy.test(longy)) {
+  if (re.test(longy)) {
   urlDatabase[shorty] = longy;
   } else {
     urlDatabase[shorty] = `https://${longy}`;
