@@ -3,11 +3,16 @@
   <title>TinyApp</title>
 </head>
 <body>
-<header>HEADER</header>
+    <% if(username === undefined) { %>
   <form method="POST" action="/login">
     <input id="username" type="text" name="username" placeholder="Create a username" style="width: 200px">
     <button type="submit">Submit</button>
   </form>
-    <!-- Add your EJS code here -->
+    <% } else { %>
+    <header><%= username %></header>
+      <form method="POST" action="/logout">
+      <button>Logout</button>
+      </form>
+    <% } %>
 </body>
 </html>
