@@ -40,7 +40,6 @@ app.get("/urls/:id", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
-
 app.post("/urls", (req, res) => {
   const shorty = generateRandomString();
   //console.log(req.path);
@@ -52,6 +51,11 @@ app.post("/urls", (req, res) => {
     urlDatabase[shorty] = `https://${longy}`;
   }
   res.redirect(`/urls/${shorty}`);
+});
+
+app.post("/urls/:id/delete", (req, res) => {
+  delete urlDatabase[req.params.id];
+  res.redirect("/urls");
 });
 
 app.get("/u/:shortURL", (req, res) => {
