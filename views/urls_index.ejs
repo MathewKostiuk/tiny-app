@@ -1,20 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- Latest compiled and minified CSS -->
+    <meta charset="utf-8">
   <% include partials/_header %>
   <title>TinyApp</title>
 </head>
 <body>
-  <ul>
     <% for (let url in urls) { %>
-    <li><%= urls[url] %> - <%= [url] %></li>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4"><p><%= urls[url] %> - <%= [url] %><br></p>
+        </div>
     <form method="POST" action="/urls/<%= [url] %>/delete">
-    <button type="submit">Delete URL</button>
-    <a href="/urls/<%= url %>">Edit</a>
+    <div class="btn-group">
+    <div class="col-md-4"><a href="/urls/<%= url %>" class="btn btn-info">Edit</a></div>
+    <div class="col-md-4"><button type="submit" class="btn btn-danger">Delete URL</button></div>
+    </div>
     </form>
     <% }; %>
-    <a href="url">Link</a>
-  </ul>
+        </div>
+        </div>
+
     <!-- Add your EJS code here -->
 </body>
 </html>
