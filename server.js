@@ -47,16 +47,27 @@ app.get("/", (req, res) => {
   res.end("Hello!");
 });
 
+// GET login request
+app.get('/login', (req, res) => {
+  let templateVars = {
+    user: (users[req.cookies["user_id"]])
+  };
+  res.render('urls_login', templateVars);
+});
+
 // GET request for registration
 app.get('/register', (req, res) => {
   res.render('urls_register');
+  let test = users[req.cookies["user_id"]];
+  console.log(test);
+
 });
 
 // GET request for homepage
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlDatabase,
-    username: req.cookies["username"]
+    user: (users[req.cookies["user_id"]])
   };
   res.render("urls_index", templateVars);
 });
@@ -64,7 +75,7 @@ app.get("/urls", (req, res) => {
 // GET request for new URL page
 app.get("/urls/new", (req, res) => {
   let templateVars = {
-    username: req.cookies["username"]
+    user: JSON.stringify((users[req.cookies["user_id"]]))
   };
   res.render("urls_new", templateVars);
 });
@@ -74,7 +85,7 @@ app.get("/urls/:id", (req, res) => {
   let templateVars = {
     shortURL: req.params.id,
     lURL: urlDatabase[req.params.id],
-    username: req.cookies["username"]
+    user: JSON.stringify((users[req.cookies["user_id"]]))
   };
   res.render("urls_show", templateVars);
 });
@@ -105,15 +116,23 @@ app.post("/urls/:id", (req, res) => {
   res.redirect("/urls");
 });
 
-// POST request for login, stores username in cookies
+// POST request for login, stores user_id in cookies
 app.post("/login", (req, res) => {
-  res.cookie('username', req.body.username);
+  console.log(req.body.email, req.body.password);
+  for (let user in users) {
+    const currentUser = users[user];
+    console.log(currentUser['id'], currentUser['email'], currentUser['password']);
+      if (currentUser['email'] === req.body.email && currentUser['password'] === req.body.password) {
+          res.cookie("user_id", currentUser['id']);
+        break;
+      } else res.status(403).send("Forbidden");
+  }
   res.redirect("/urls");
 });
 
 // POST request for logout, clears cookies
 app.post("/logout", (req, res) => {
-  res.clearCookie('username');
+  res.clearCookie('user_id');
   res.redirect('/urls');
 });
 
@@ -121,10 +140,10 @@ app.post("/logout", (req, res) => {
 app.post("/register", (req, res) => {
   if (req.body.email && req.body.password === "") {
     res.status(400).send('Bad Request');
+    return;
   }
   for (let user in users) {
     const uemail = users[user];
-      console.log(uemail);
       if (uemail['email'] === req.body.email) {
           res.status(400).send('Email already in use');
       }
@@ -136,14 +155,13 @@ app.post("/register", (req, res) => {
     password: req.body.password
   };
   res.cookie('user_id', randomID);
-  console.log(users);
   res.redirect('/urls');
 });
 
 // GET request
 app.get("/u/:shortURL", (req, res) => {
   let templateVars = {
-    username: req.cookies["username"]
+    user: JSON.stringify((users[req.cookies["user_id"]]))
   };
   let longURL = urlDatabase[req.params.shortURL];
   res.redirect(longURL);
