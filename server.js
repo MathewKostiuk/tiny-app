@@ -76,7 +76,9 @@ app.get("/urls", (req, res) => {
 app.get("/urls/new", (req, res) => {
   let templateVars = {
     user: JSON.stringify((users[req.cookies["user_id"]]))
-  };
+  }; if (req.cookies["user_id"] === undefined) {
+    res.redirect("/login");
+  }
   res.render("urls_new", templateVars);
 });
 
@@ -121,7 +123,6 @@ app.post("/login", (req, res) => {
   console.log(req.body.email, req.body.password);
   for (let user in users) {
     const currentUser = users[user];
-    console.log(currentUser['id'], currentUser['email'], currentUser['password']);
       if (currentUser['email'] === req.body.email && currentUser['password'] === req.body.password) {
           res.cookie("user_id", currentUser['id']);
         break;
