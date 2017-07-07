@@ -144,7 +144,10 @@ app.get("/urls/:id", (req, res) => {
 });
 
 // POST request to update database with new short URL
-// RegEx to test whether url includes http:// at beginning only
+
+// Use urlCheck function to check for http://
+
+
 app.post("/urls", (req, res) => {
   const shorty = generateRandomString();
   let longy = "";
@@ -189,10 +192,13 @@ app.post("/logout", (req, res) => {
 });
 
 // POST request with registration data
+
+// Check for empty fields
 app.post("/register", (req, res) => {
   if (req.body.email || req.body.password === "") {
     return res.status(400).send('Bad Request');
 
+// Check for email availability
   }
   for (let user in users) {
     const currentUser = users[user];
@@ -200,12 +206,16 @@ app.post("/register", (req, res) => {
       return res.status(400).send('Email already in use');
     }
   }
+
+  // Create new entry in 'users' with bcrypt password
   const randomID = generateRandomString();
   users[randomID] = {
     id: randomID,
     email: req.body.email,
     hashedPassword: bcrypt.hashSync(req.body.password, 10)
   };
+
+  // Assign cookies
   req.session.user_id = randomID;
   res.redirect('/urls');
 });
@@ -215,6 +225,8 @@ app.get("/u/:shortURL", (req, res) => {
   let templateVars = {
     user: (users[req.session.user_id])
   };
+
+  // checking 'URL database for :shortURL'
   let longURL = "";
   for (let user in urlDatabase) {
     let currentUser = urlDatabase[user];
