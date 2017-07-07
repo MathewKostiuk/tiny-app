@@ -44,14 +44,6 @@ const users = {
     hashedPassword: "$2a$10$rVbXkED9fM5V9kolvAERAObnvFFt6XncNyr//XnedxnAL79.S1RKW"
   }
 };
-
-function checkDatabase(database, cookies, params) {
-  if (database[cookies].hasOwnProperty(params)) {
-    return true;
-  } else { return false; }
-}
-
-
 function generateRandomString() {
   const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
@@ -60,6 +52,15 @@ function generateRandomString() {
   for (var i = 0; i < 6; i++) { text += chars.charAt(Math.floor(Math.random() * chars.length)); }
   return text;
 }
+
+
+function checkDatabase(database, cookies, params) {
+  if (database[cookies].hasOwnProperty(params)) {
+    return true;
+  } else { return false; }
+}
+
+
 
 function verifyUser(email, password) {
   for (let user in users) {
@@ -205,8 +206,6 @@ app.post("/register", (req, res) => {
     email: req.body.email,
     hashedPassword: bcrypt.hashSync(req.body.password, 10)
   };
-  console.log(users);
-  console.log(randomID);
   req.session.user_id = randomID;
   res.redirect('/urls');
 });
