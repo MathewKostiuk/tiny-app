@@ -8,10 +8,14 @@
   <title>TinyApp</title>
 </head>
 <body>
+ <h1>Welcome to Tiny-App!</h1>
 <% if (user === undefined) { %>
 <a href="/register" class="btn btn-info">Register</a>
 <a href="/login" class="btn btn-info">Login</a>
 <% } else { %>
+<h3><%= user['email'] %></h3>
+<a href="/urls/new" class="btn btn-info">New URL</a>
+<a href="/urls" class="btn btn-info">My URLs</a>
 <form method="POST" action="/logout">
 <button type="submit">Logout</button>
 </form>
