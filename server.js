@@ -102,7 +102,11 @@ app.get('/login', (req, res) => {
 
 // GET request for registration
 app.get('/register', (req, res) => {
-  res.render('urls_register');
+  let templateVars = {
+    urls: urlDatabase[req.session.user_id],
+    user: (users[req.session.user_id])
+  };
+  res.render('urls_register', templateVars);
   let test = users[req.session.user_id];
 
 });
@@ -156,6 +160,8 @@ app.post("/urls", (req, res) => {
   } else {
     longy += `https://${req.body.longURL}`;
   }
+  console.log(longy);
+  console.log(urlDatabase[req.session.user_id]);
   urlDatabase[req.session.user_id][shorty] = longy;
   res.redirect(`/urls/${shorty}`);
 });
@@ -179,7 +185,7 @@ app.post("/urls/:id", (req, res) => {
 app.post("/login", (req, res) => {
   currentUser = verifyUser(req.body.email, req.body.password);
   if (currentUser === undefined) {
-    return res.status(400).send('Bad Request');
+    return res.status(400).send('Invalid entry, please go back and try again.');
   } else { req.session.user_id = currentUser['id']; }
 
   res.redirect("/urls");
@@ -195,7 +201,7 @@ app.post("/logout", (req, res) => {
 
 // Check for empty fields
 app.post("/register", (req, res) => {
-  if (req.body.email || req.body.password === "") {
+  if ((req.body.email === "") || (req.body.password === "")) {
     return res.status(400).send('Bad Request');
 
 // Check for email availability
@@ -208,15 +214,20 @@ app.post("/register", (req, res) => {
   }
 
   // Create new entry in 'users' with bcrypt password
-  const randomID = generateRandomString();
-  users[randomID] = {
-    id: randomID,
+  req.session.user_id = generateRandomString();
+  users[req.session.user_id] = {
+    id: req.session.user_id,
     email: req.body.email,
     hashedPassword: bcrypt.hashSync(req.body.password, 10)
   };
+  // Create spot for new user in URL database
+  urlDatabase[req.session.user_id] = {};
 
   // Assign cookies
-  req.session.user_id = randomID;
+  //req.session.user_id = randomID;
+  console.log(req.session.user_id);
+  console.log(urlDatabase[req.session.user_id]);
+
   res.redirect('/urls');
 });
 
