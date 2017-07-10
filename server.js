@@ -54,8 +54,8 @@ function generateRandomString() {
 }
 
 
-function checkDatabase(database, cookies, params) {
-  if (database[cookies].hasOwnProperty(params)) {
+function checkDatabase(database, userId, urlId) {
+  if (database[userId].hasOwnProperty(urlId)) {
     return true;
   } else { return false; }
 }
@@ -160,8 +160,6 @@ app.post("/urls", (req, res) => {
   } else {
     longy += `https://${req.body.longURL}`;
   }
-  console.log(longy);
-  console.log(urlDatabase[req.session.user_id]);
   urlDatabase[req.session.user_id][shorty] = longy;
   res.redirect(`/urls/${shorty}`);
 });
@@ -225,8 +223,6 @@ app.post("/register", (req, res) => {
 
   // Assign cookies
   //req.session.user_id = randomID;
-  console.log(req.session.user_id);
-  console.log(urlDatabase[req.session.user_id]);
 
   res.redirect('/urls');
 });
