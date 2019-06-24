@@ -41,11 +41,7 @@ module.exports = function(Helpers, Constants) {
     res.render('urls_show', templateVars);
   });
 
-  // POST request to update database with new short URL
-
-  // Use urlCheck function to check for http://
-
-
+  // Make a new URL
   router.post("/", (req, res) => {
     const shorty = Helpers.generateRandomString();
     let longy = "";
@@ -58,14 +54,14 @@ module.exports = function(Helpers, Constants) {
     res.redirect(`/urls/${shorty}`);
   });
 
-  // POST request to delete URL
+  // Delete a URL
   router.post("/:id/delete", (req, res) => {
     if (!Helpers.cookieCheck(req.session.user_id)) {
       delete db[req.session.user_id][req.params.id];
     } res.redirect('/urls');
   });
 
-  //POST request for editing longURL
+  //Edit a URL
   router.post("/:id", (req, res) => {
     if (!Helpers.cookieCheck(req.session.user_id)) {
       db[req.session.user_id][req.params.id] = req.body.longURL;

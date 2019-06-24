@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcrypt');
 
 module.exports = function(Helpers, Constants) {
 
@@ -13,6 +12,7 @@ module.exports = function(Helpers, Constants) {
     }
     res.redirect("/login");
   });
+
   // GET login request
   router.get('/login', (req, res) => {
     let templateVars = {
@@ -53,30 +53,19 @@ module.exports = function(Helpers, Constants) {
   });
 
   // POST request with registration data
-
-  // Check for empty fields
   router.post("/register", (req, res) => {
     if ((req.body.email === "") || (req.body.password === "")) {
       return res.status(400).send('Bad Request');
-
-      // Check for email availability
     }
+    // Check for email availability
     for (let user in users) {
       const currentUser = users[user];
       if (currentUser['email'] === req.body.email) {
         return res.status(400).send('Email already in use');
       }
     }
+    Helpers.registerNewUser(db, users, Helpers, req);
 
-    // Create new entry in 'users' with bcrypt password
-    req.session.user_id = Helpers.generateRandomString();
-    users[req.session.user_id] = {
-      id: req.session.user_id,
-      email: req.body.email,
-      hashedPassword: bcrypt.hashSync(req.body.password, 10)
-    };
-    // Create spot for new user in URL database
-    db[req.session.user_id] = {};
     res.redirect('/urls');
   });
 

@@ -1,4 +1,5 @@
 "use strict";
+const bcrypt = require('bcrypt');
 
 module.exports = {
   generateRandomString: function () {
@@ -6,7 +7,9 @@ module.exports = {
 
     let text = '';
 
-    for (var i = 0; i < 6; i++) { text += chars.charAt(Math.floor(Math.random() * chars.length)); }
+    for (var i = 0; i < 6; i++) {
+      text += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
     return text;
   },
   checkDatabase: function(database, userId, urlId) {
@@ -40,5 +43,16 @@ module.exports = {
       }
     }
     return longURL;
+  },
+  registerNewUser: function(db, users, Helpers, req) {
+    // Create new entry in 'users' with bcrypt password
+    req.session.user_id = this.generateRandomString();
+    users[req.session.user_id] = {
+      id: req.session.user_id,
+      email: req.body.email,
+      hashedPassword: bcrypt.hashSync(req.body.password, 10)
+    };
+    // Create spot for new user in URL database
+    db[req.session.user_id] = {};
   }
 }

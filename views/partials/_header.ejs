@@ -3,27 +3,37 @@
 <head>
   <!-- Latest compiled and minified CSS -->
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <meta name="viewport" content="width=device-width,
+  initial-scale=1">
+  <link href="/css/style.css" rel="stylesheet" type="text/css">
   <meta charset="utf-8">
+
   <title>TinyApp</title>
 </head>
 
 <body>
-  <h1>Welcome to Tiny-App!</h1>
+  <section class='header'>
+    <div class="title">
+      <h1>Tiny-App</h1>
+      <h5>URL Optimizer</h5>
+    </div>
   <% if (user === undefined) { %>
-  <a href="/register" class="btn btn-info">Register</a>
-  <a href="/login" class="btn btn-info">Login</a>
+    <div class="account-controls">
+      <a href="/login" class='login button'>Login</a>
+      <a href="/register" class='register button'>Register</a>
+    </div>
   <% } else { %>
-  <h3><%= user['email'] %></h3>
-  <a href="/urls/new" class="btn btn-info">New URL</a>
-  <a href="/urls" class="btn btn-info">My URLs</a>
-  <form method="POST" action="/logout">
-    <button type="submit">Logout</button>
-  </form>
+    <div class='user-container'>
+      <h3><%= user['email'] %></h3>
+      <a href="/urls/new" class='button url'>New URL</a>
+      <a href="/urls" class='button url'>My URLs</a>
+      <form method="POST" action="/logout">
+        <button type="submit" class='logout button'>Logout</button>
+      </form>
+    </div>
   <% } %>
   <br>
+  </section>
 </body>
 
 </html>

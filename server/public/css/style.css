@@ -1,0 +1,95 @@
+body {
+  background: linear-gradient(0.25turn, #BA2D0B, #73BA9B, #01110A);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  height: 10vh;
+}
+
+.title h1 {
+  margin-bottom: 0.1em;
+}
+
+.title h5 {
+  margin-left: 1em;
+  margin-top: 0;
+}
+
+.account-controls {
+  text-align: right;
+  margin-right: 1em;
+  margin-top: 0.7em;
+}
+
+.button {
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  background-color:#BA2D0B;
+  box-shadow: 3px 4px 5px #445a57;
+}
+
+.button.login, .button.register, .button.submit {
+  color: white;
+  background-color:#BA2D0B;
+  box-shadow: 3px 4px 5px #445a57;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  width: 250px;
+  height: 235px;
+  background-color: #73BA9B;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px #003E1F;
+}
+
+.input-field {
+  padding: 5px;
+  border-radius: 5px;
+  width: 80%;
+  height: 25px;
+  margin: 2px auto;
+}
+
+.button.submit {
+  width: 80%;
+  margin: 20px auto;
+  border: 0;
+}
+
+.url {
+  width: 100px;
+}
+
+.user-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  height: 235px;
+  width: 250px;
+  background-color: #73BA9B;
+  border-radius: 5px;
+  box-shadow: 3px 4px 5px #003E1F;
+}
+
+.logout {
+  border: 0;
+  display: block;
+  background-color: #D5F2E3;
+  color: #01110A;
+}
+
+.user-container h3, a, button {
+  margin: 0 auto;
+}

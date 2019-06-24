@@ -10,15 +10,15 @@
 
 <body>
   <% for (let url in urls) { %>
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
+  <div>
+    <div>
+      <div>
         <p><%= urls[url] %> - <%= [url] %><br></p>
       </div>
       <form method="POST" action="/urls/<%= [url] %>/delete">
-        <div class="btn-group">
-          <div class="col-md-4"><a href="/urls/<%= url %>" class="btn btn-info">Edit</a></div>
-          <div class="col-md-4"><button type="submit" class="btn btn-danger">Delete URL</button></div>
+        <div>
+          <div><a href="/urls/<%= url %>">Edit</a></div>
+          <div><button type="submit">Delete URL</button></div>
         </div>
       </form>
       <% }; %>

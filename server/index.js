@@ -17,6 +17,7 @@ app.use(cookieSession({
   // Cookie Options
   maxAge: 24 * 60 * 60 * 1000
 }));
+
 // set ejs as view engine
 app.set("view engine", "ejs");
 app.set('views', path.join(__dirname, '../views'));
@@ -24,6 +25,8 @@ app.set('views', path.join(__dirname, '../views'));
 app.use("/urls", urlRoutes);
 app.use("/shorty", shortURLRoutes);
 app.use("/", authRoutes);
+app.use(express.static('public'));
+
 
 // server listening on PORT=8080
 app.listen(PORT, () => {
