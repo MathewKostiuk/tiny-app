@@ -7,7 +7,14 @@
 </head>
 
 <body>
+    <form method="POST" action="/login" class='form'>
+      <h2>Login</h2>
+      <input id="email" type="email" name="email" placeholder="Enter email..." class='input-field'>
+      <input id="password" type="password" name="password" placeholder="Enter password..." class='input-field'>
+      <button type="submit" class='button submit'>Submit</button>
+    </form>
   <form method="POST" action="/register" class='form'>
+    <h2>Register</h2>
     <input id="email" type="email" name="email" placeholder="Email..." class='input-field'>
     <input id="password" type="password" name="password" placeholder="Create a password" class='input-field'>
     <button type="submit" class='button submit'>Submit</button>

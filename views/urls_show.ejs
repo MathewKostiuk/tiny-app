@@ -7,15 +7,11 @@
 </head>
 
 <body>
-  <ul>
-
-    <li>Short URL: <%= shortURL %></li>
-    <form method="POST" action="/urls/<%= shortURL %>">
-      <input id="longURL" type="text" name="longURL" placeholder="http://" style="width: 300px">
-      <button type="submit">Update</button>
-    </form>
-
-  </ul>
+  <form method="POST" action="/urls/<%= shortURL %>" class='form'>
+    <h2>Short URL: <%= shortURL %></h2>
+    <input id="longURL" type="text" name="longURL" placeholder="http://" class='input-field'>
+    <button type="submit" class='button submit'>Update</button>
+  </form>
 </body>
 
 </html>
